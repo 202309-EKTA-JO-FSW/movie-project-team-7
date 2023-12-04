@@ -2,7 +2,12 @@ import styles from "@/styles/Home.module.css"
 import Link from "next/link"
 import Pagination from "@/util/Pagination"
 
-export default function Home({ latestMovies, filter, currentPage }) {
+export default function Home({
+  latestMovies,
+  filter,
+  currentPage,
+  numberOfPages,
+}) {
   const movies = latestMovies.map((movie, index) => {
     return (
       <div
@@ -50,7 +55,11 @@ export default function Home({ latestMovies, filter, currentPage }) {
         >
           {"loading..." && movies}
         </ul>
-        <Pagination currentPage={currentPage} filter={filter} />
+        <Pagination
+          currentPage={currentPage}
+          filter={filter}
+          numberOfPages={numberOfPages}
+        />
       </div>
     </div>
   )
@@ -74,13 +83,16 @@ export async function getServerSideProps({ query }) {
     `https://api.themoviedb.org/3/movie/${filter}?language=en-US&page=${currentPage}`,
     options,
   )
-  const data = await latestMoviesResp.json()
-  const latestMovies = [...data.results]
+  const latestMoviesData = await latestMoviesResp.json()
+  const numberOfPages = latestMoviesData.total_pages
+  const latestMovies = [...latestMoviesData.results]
+
   return {
     props: {
       latestMovies,
       filter,
       currentPage,
+      numberOfPages,
     },
   }
 }

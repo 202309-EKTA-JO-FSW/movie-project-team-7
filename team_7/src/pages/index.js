@@ -81,7 +81,6 @@ export async function getServerSideProps({}) {
     "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
     options,
   )
-  //TODO :get the total number of pages
   const data = await resp.json()
   const latestMovies = [...data.results]
   return {
