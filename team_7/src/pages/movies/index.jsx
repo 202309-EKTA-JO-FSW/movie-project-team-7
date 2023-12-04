@@ -1,7 +1,8 @@
 import styles from "@/styles/Home.module.css"
 import Link from "next/link"
+import Pagination from "@/util/Pagination"
 
-export default function Home({ latestMovies, filterBy }) {
+export default function Home({ latestMovies, filter, currentPage }) {
   const movies = latestMovies.map((movie, index) => {
     return (
       <div
@@ -32,7 +33,7 @@ export default function Home({ latestMovies, filterBy }) {
   })
   return (
     <div style={{ textAlign: "center" }}>
-      {filterBy
+      {filter
         .split("_")
         .map((movie) => movie.at(0).toUpperCase() + movie.slice(1))
         .join(" ")}
@@ -49,13 +50,15 @@ export default function Home({ latestMovies, filterBy }) {
         >
           {"loading..." && movies}
         </ul>
+        <Pagination currentPage={currentPage} filter={filter} />
       </div>
     </div>
   )
 }
 
 export async function getServerSideProps({ query }) {
-  const filterBy = query.filter
+  const filter = query.filter
+  const currentPage = query.page
   //fetch options
   const options = {
     method: "GET",
@@ -68,7 +71,7 @@ export async function getServerSideProps({ query }) {
 
   //get the latest movies
   const latestMoviesResp = await fetch(
-    `https://api.themoviedb.org/3/movie/${filterBy}?language=en-US&page=${query.page}`,
+    `https://api.themoviedb.org/3/movie/${filter}?language=en-US&page=${currentPage}`,
     options,
   )
   const data = await latestMoviesResp.json()
@@ -76,7 +79,8 @@ export async function getServerSideProps({ query }) {
   return {
     props: {
       latestMovies,
-      filterBy,
+      filter,
+      currentPage,
     },
   }
 }

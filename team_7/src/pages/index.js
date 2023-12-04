@@ -1,6 +1,4 @@
-import styles from "@/styles/Home.module.css"
 import Link from "next/link"
-
 export default function Home({ latestMovies }) {
   const movies = latestMovies.map((movie, index) => {
     return (
@@ -22,6 +20,12 @@ export default function Home({ latestMovies }) {
             <img
               width={"100px"}
               src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+              //   <Image
+              //   src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+              //   alt={movie.title}
+              //   width={100}
+              //   height={200}
+              // />
             />
           </Link>
           <br />
@@ -39,7 +43,7 @@ export default function Home({ latestMovies }) {
             query: { page: 1, filter: "upcoming" },
           }}
         >
-          top movies
+          actors
         </Link>
       </div>
       Latest Movies
@@ -77,6 +81,7 @@ export async function getServerSideProps({}) {
     "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
     options,
   )
+  //TODO :get the total number of pages
   const data = await resp.json()
   const latestMovies = [...data.results]
   return {
