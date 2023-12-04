@@ -66,6 +66,10 @@ export default function Home({ latestMovies }) {
 }
 
 export async function getServerSideProps({}) {
+
+
+export async function getServerSideProps() {
+
   //fetch options
   const options = {
     method: "GET",
