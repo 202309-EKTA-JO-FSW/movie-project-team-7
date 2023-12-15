@@ -27,7 +27,7 @@ const MoviePage = ({
       key={index}
       class="transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 text-center max-w-lg"
     >
-      <Link href={`../actors/${actor.id}`} key={index}>
+      <Link href={`/actors/${actor.id}`} key={index}>
         <img
           className="h-56 w-40 rounded-lg shadow-xl  "
           src={`https://image.tmdb.org/t/p/original/${actor.profile_path}`}
@@ -44,7 +44,7 @@ const MoviePage = ({
       key={index}
       className="transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 text-center max-w-[160px]"
     >
-      <Link href={`/movies/${movie.id}`} key={index} passHref>
+      <Link href={`/movies/${movie.id}`} key={index}>
         <img
           className="h-56 w-40 rounded-lg shadow-xl  "
           src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
@@ -84,7 +84,7 @@ const MoviePage = ({
           <p className="text-2xl">
             Rating:{" "}
             <b>
-             <CircularProgressbar
+              <CircularProgressbar
                 value={Math.round(rating * 10) / 10}
                 text={`${Math.round(rating * 10) / 10}`}
                 minValue={0}
@@ -106,7 +106,7 @@ const MoviePage = ({
           </p>
         </div>
       </div>
-    {/* movie actors list */}
+      {/* movie actors list */}
       <div className="flex flex-col mx-20 gap-10 my-16 text-center">
         <p className="text-slate-100 text-4xl font-bold">Cast</p>
         <div className="flex gap-9 justify-around ">{actorsItems}</div>
@@ -126,7 +126,7 @@ const MoviePage = ({
           ></iframe>
         )}
       </div>
-      
+
       {productionCompany && (
         <div className="flex flex-col mx-[500px] gap-5 pb-10 text-slate-100 font-semibold text-3xl ">
           <span className="mt-auto">Produced By:</span>
